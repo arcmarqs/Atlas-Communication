@@ -7,6 +7,7 @@ use atlas_common::error::*;
 use atlas_common::node_id::{NodeId, NodeType};
 use atlas_common::peer_addr::PeerAddr;
 use atlas_common::channel;
+use log::info;
 
 use std::sync::{Arc};
 use std::time::Duration;
