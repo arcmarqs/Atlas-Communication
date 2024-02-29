@@ -99,6 +99,7 @@ impl<T> ReconfigurationMessageHandler<T> {
     }
 
     pub fn push_request(&self, message: T) -> Result<()> {
+        info!("push request reconf message");
         self.reconfiguration_message_handling.0.send(message)
     }
 }
@@ -190,6 +191,8 @@ impl<T> ReconfigurationIncomingHandler<T> for ReconfigurationMessageHandler<T> {
 
 impl<T> ReconfigurationNetworkUpdate for ReconfigurationMessageHandler<T> {
     fn send_reconfiguration_update(&self, update: NetworkUpdateMessage) -> Result<()> {
+        info!("sending reconf update");
+
         self.update_message_handling.0.send(update)
     }
 }
