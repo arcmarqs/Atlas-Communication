@@ -254,6 +254,10 @@ impl WritingBuffer {
     }
 }
 
-pub fn initialize_send_channel() -> (ChannelSyncTx<NetworkSerializedMessage>, ChannelSyncRx<NetworkSerializedMessage>) {
-    channel::new_bounded_sync(SEND_QUEUE_SIZE, Some("Network Msg"))
+pub fn initialize_send_channel(name: Option<&str>) -> (ChannelSyncTx<NetworkSerializedMessage>, ChannelSyncRx<NetworkSerializedMessage>) {
+    channel::new_bounded_sync(SEND_QUEUE_SIZE, name)
 }
+pub fn initialize_peer_send_channel() -> (ChannelSyncTx<NetworkSerializedMessage>, ChannelSyncRx<NetworkSerializedMessage>) {
+    channel::new_bounded_sync(SEND_QUEUE_SIZE, Some("Peer Conns"))
+}
+

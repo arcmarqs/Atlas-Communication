@@ -319,7 +319,7 @@ impl<NI, RM, PM> ServerWorker<NI, RM, PM>
                                                                                       node_type,
                                                                                       read_buf,
                                                                                       write_buf,
-                                                                                      channel.unwrap_or_else(conn_util::initialize_send_channel));
+                                                                                      channel.unwrap_or_else(conn_util::initialize_peer_send_channel));
                         }
                         _ => unreachable!()
                     }
@@ -492,7 +492,7 @@ impl<NI, RM, PM> ServerWorker<NI, RM, PM>
                                                     if let Some(node_type) = node_type {
                                                         return Ok(ConnectionResult::Connected(header.from(), node_type, received));
                                                     } else {
-                                                        let to_send = conn_util::initialize_send_channel();
+                                                        let to_send = conn_util::initialize_send_channel(Some("WireMsg"));
 
                                                         self.registered_conns.insert_pending_connection(PendingConnHandle::new(peer_id.unwrap(), to_send, self.waker.clone()))
                                                     }
@@ -667,7 +667,7 @@ impl ConnectionHandler {
                                                                       peer_node_type,
                                                                       ReadingBuffer::init_with_size(Header::LENGTH),
                                                                       None,
-                                                                      conn_util::initialize_send_channel());
+                                                                      conn_util::initialize_send_channel(Some("NetworkMsg")));
 
                             conn_handler.done_connecting_to_node(&peer_id);
 
