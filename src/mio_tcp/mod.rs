@@ -529,14 +529,12 @@ impl<RM, PM> SendTo<RM, PM>
             (SendToPeer::Peer(peer), Either::Right((buf, digest))) => {
                 let message = WireMessage::new(self.my_id, self.peer_id,
                                                buf, self.nonce, Some(digest), key_pair);
-                info!("sending peer wire message");
 
                 peer.peer_message(message, None).unwrap();
             }
             (SendToPeer::PendingPeer(peer), Either::Right((buf, digest))) => {
                 let message = WireMessage::new(self.my_id, self.peer_id,
                                                buf, self.nonce, Some(digest), key_pair);
-                info!("sending peer wire message pending");
 
                 peer.peer_message(message).unwrap();
             }
@@ -569,7 +567,6 @@ impl<RM, PM> SendTo<RM, PM>
                 let (_, buf) = msg.into_inner();
 
                 let wm = WireMessage::from_parts(header, buf).unwrap();
-                info!("sending peer reconf message");
 
                 peer_cnn.peer_message(wm, None).unwrap();
             }
@@ -581,7 +578,6 @@ impl<RM, PM> SendTo<RM, PM>
                 match msg {
                     NetworkMessageKind::ReconfigurationMessage(reconf) => {
                         let wm = WireMessage::from_parts(header, buf).unwrap();
-                        info!("sending peer reconf message pending");
                         pending_conn.peer_message(wm).unwrap();
                     }
                     NetworkMessageKind::Ping(_) => {}
