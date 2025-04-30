@@ -23,8 +23,8 @@ pub fn deserialize_message<R, RM, PM>(
     where RM: Serializable,
           PM: Serializable,
           R: Read + AsRef<[u8]> {
-    let msg = bincode::serde::borrow_decode_from_slice(r.as_ref(), bincode::config::standard())
-        .context("Failed to deserialize message")?;
+        let (msg, _read_bytes) = bincode::serde::decode_from_slice(r.as_ref(), bincode::config::standard())
+            .context("Failed to deserialize message")?;
 
     Ok(msg)
 }
