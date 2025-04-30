@@ -1,4 +1,4 @@
-#![feature(async_fn_in_trait)]
+//#![feature(async_fn_in_trait)]
 
 use std::sync::Arc;
 use std::time::Duration;
